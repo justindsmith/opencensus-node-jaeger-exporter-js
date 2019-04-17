@@ -1,0 +1,15 @@
+// Initialize tracing
+const { tracer } = require("./tracing");
+
+var express = require("express");
+var app = express();
+
+app.get("/", function(req, res) {
+  res.send("Hello World");
+});
+
+app.listen(3000);
+
+tracer.startRootSpan({ name: "my-first-index-span" }, rootSpan =>
+  setTimeout(() => rootSpan.end(), 200)
+);
